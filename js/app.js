@@ -42,15 +42,23 @@ $(document).ready(function() {
     var numCorrect = 0;
     var currQuestion = 0;
 $(".question").on("click", "#submitanswer", function () {
+    updateanswer();
     currQuestion++;
     nextQuestion();
     });
     $(".question").on("click", "#tryagain", function () {
         numCorrect = 0;
-        currentQuestion = 0;
+        currQuestion = 0;
         var newQuestion = '<span class="questitle">'+questions[currQuestion].question+'</span><br><div id="possanswers"><input type="radio" name="option" class="option" value="0">'+questions[currQuestion].choices[0]+'<br><input type="radio" name="option" class="option" value="1">'+questions[currQuestion].choices[1]+'<br><input type="radio" name="option" class="option" value="2">'+questions[currQuestion].choices[2]+'<br><input type="radio" name="option" class="option" value="3">'+questions[currQuestion].choices[3]+'<br></div><button id="submitanswer">Submit Answer</button>';
         $(".question").html(newQuestion);
     });
+    
+    function updateanswer() {
+        var answer = $("input[type='radio']:checked").val();
+        if (answer == questions[currQuestion].correct) {
+            numCorrect++;    
+        }
+    }
     function nextQuestion() {
         if (currQuestion < 5) {
             $(".questitle").remove();
@@ -62,18 +70,22 @@ $(".question").on("click", "#submitanswer", function () {
             $(".questitle").remove();
             $(".possanswers input").remove();
             $("#submitanswer").css("display", "none");
+            $(".question").html(newQuestion);
             if (numCorrect == 1) {
                 var finalScore = 'Congratulations on finishing the quiz!  You correctly answered '+numCorrect+' question.';
-                $(".possanswers").html(finalScore);      
+                $(".finaloutput").html(finalScore);      
                 $(".finalanswer").show();
-
+                $(".finaloutput").show();
+                $(".question").hide();
             }
             else {
                 var finalScore = 'Congratulations on finishing the quiz!  You correctly answered '+numCorrect+' questions.';
-                $(".possanswers").html(finalScore);
+                $(".finaloutput").html(finalScore);
+                $(".finaloutput").show();
                 $(".finalanswer").show();
                 $(".question").hide();
             }
         }
     }
+
 });
