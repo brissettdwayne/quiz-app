@@ -46,31 +46,33 @@ $(".question").on("click", "#submitanswer", function () {
     nextQuestion();
     });
     $(".question").on("click", "#tryagain", function () {
-        numberCorrect = 0;
+        numCorrect = 0;
         currentQuestion = 0;
-        var newQuestion = '<span class="questitle">'+questions[currQuestion].questitle+'</span><br><div id="possanswers"><input type="radio" name="option" class="option" value="0">'+questions[currentQuestion].choices[0]+'<br><input type="radio" name="option" class="option" value="1">'+questions[currentQuestion].choices[1]+'<br><input type="radio" name="option" class="option" value="2">'+questions[currentQuestion].choices[2]+'<br><input type="radio" name="option" class="option" value="3">'+questions[currentQuestion].choices[3]+'<br></div><input type="button" id="submit">';
+        var newQuestion = '<span class="questitle">'+questions[currQuestion].question+'</span><br><div id="possanswers"><input type="radio" name="option" class="option" value="0">'+questions[currQuestion].choices[0]+'<br><input type="radio" name="option" class="option" value="1">'+questions[currQuestion].choices[1]+'<br><input type="radio" name="option" class="option" value="2">'+questions[currQuestion].choices[2]+'<br><input type="radio" name="option" class="option" value="3">'+questions[currQuestion].choices[3]+'<br></div><button id="submitanswer">Submit Answer</button>';
         $(".question").html(newQuestion);
     });
     function nextQuestion() {
         if (currQuestion < 5) {
             $(".questitle").remove();
             $(".possanswers input").remove();
-            var newQuestion = '<span class="questitle">'+questions[currQuestion].questitle+'</span><br><div id="possanswers"><input type="radio" name="option" class="option" value="0">'+questions[currQuestion].choices[0]+'<br><input type="radio" name="option" class="option" value="1">'+questions[currQuestion].choices[1]+'<br><input type="radio" name="option" class="option" value="2">'+questions[currQuestion].choices[2]+'<br><input type="radio" name="option" class="option" value="3">'+questions[currQuestion].choices[3]+'<br></div><input type="button" id="submitanswer">';
+            var newQuestion = '<span class="questitle">'+questions[currQuestion].question+'</span><br><div id="possanswers"><input type="radio" name="option" class="option" value="0">'+questions[currQuestion].choices[0]+'<br><input type="radio" name="option" class="option" value="1">'+questions[currQuestion].choices[1]+'<br><input type="radio" name="option" class="option" value="2">'+questions[currQuestion].choices[2]+'<br><input type="radio" name="option" class="option" value="3">'+questions[currQuestion].choices[3]+'<br></div><button id="submitanswer">Submit Answer</button>';
             $(".question").html(newQuestion);
         }
         else {
             $(".questitle").remove();
             $(".possanswers input").remove();
-            $("#submitanswer").hide();
+            $("#submitanswer").css("display", "none");
             if (numCorrect == 1) {
                 var finalScore = 'Congratulations on finishing the quiz!  You correctly answered '+numCorrect+' question.';
                 $(".possanswers").html(finalScore);      
                 $(".finalanswer").show();
+
             }
             else {
                 var finalScore = 'Congratulations on finishing the quiz!  You correctly answered '+numCorrect+' questions.';
                 $(".possanswers").html(finalScore);
                 $(".finalanswer").show();
+                $(".question").hide();
             }
         }
     }
