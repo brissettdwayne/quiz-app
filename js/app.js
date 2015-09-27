@@ -42,9 +42,14 @@ $(document).ready(function() {
     var numCorrect = 0;
     var currQuestion = 0;
 $(".question").on("click", "#submitanswer", function () {
-    updateanswer();
-    currQuestion++;
-    nextQuestion();
+    if (validateAnswer($("input[type='radio']:checked").val()) == 1) {
+        updateanswer();
+        currQuestion++;
+        nextQuestion();
+    }
+    else {
+        alert ("Please Select Answer");
+    }
     });
     $(".question").on("click", "#tryagain", function () {
         numCorrect = 0;
@@ -52,7 +57,14 @@ $(".question").on("click", "#submitanswer", function () {
         var newQuestion = '<span class="questitle">'+questions[currQuestion].question+'</span><br><div id="possanswers"><input type="radio" name="option" class="option" value="0">'+questions[currQuestion].choices[0]+'<br><input type="radio" name="option" class="option" value="1">'+questions[currQuestion].choices[1]+'<br><input type="radio" name="option" class="option" value="2">'+questions[currQuestion].choices[2]+'<br><input type="radio" name="option" class="option" value="3">'+questions[currQuestion].choices[3]+'<br></div><button id="submitanswer">Submit Answer</button>';
         $(".question").html(newQuestion);
     });
-    
+    function validateAnswer(value) {
+        var validAnswer = 0;
+        if (typeof value != "undefined") {
+            validAnswer = 1;
+        }
+        return validAnswer;
+    }
+
     function updateanswer() {
         var answer = $("input[type='radio']:checked").val();
         if (answer == questions[currQuestion].correct) {
